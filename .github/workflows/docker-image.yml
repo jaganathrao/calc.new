@@ -1,0 +1,36 @@
+name: Docker Image CI/CD
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Check out the repository
+      - name: Check out the code
+        uses: actions/checkout@v4
+
+      # Step 2: Set up Python
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'  # Adjust to your Python version
+
+
+      # Step 5: Log in to Docker Hub
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: "jaganathrao1234"
+          password: "jagan123"
+
+      # Step 6: Build the Docker image
+      - name: Build the Docker image
+        run: docker build . --file Dockerfile --tagjaganathrao1234/wow:latest
+
+      # Step 7: Push the Docker image to Docker Hub
+      - name: Push the Docker image
+        run: docker push jaganathrao1234/wow:latest
